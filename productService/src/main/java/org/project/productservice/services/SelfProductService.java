@@ -1,14 +1,30 @@
 package org.project.productservice.services;
 
 import org.project.productservice.Dtos.GenericProductDto;
+import org.project.productservice.Dtos.UserDto;
 import org.project.productservice.exceptions.ProductNotFoundException;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Primary
+@Service
 public class SelfProductService implements ProductService{
+
+    private RestTemplate restTemplate ;
+
+    public SelfProductService(RestTemplate restTemplate){
+        this.restTemplate = restTemplate ;
+    }
     @Override
     public GenericProductDto getProductById(Long id) throws ProductNotFoundException {
-        return null;
+        GenericProductDto genericProductDto = new GenericProductDto() ;
+
+        restTemplate.getForEntity("http://authService/users/1" , UserDto.class) ;
+
+        return genericProductDto;
     }
 
     @Override
